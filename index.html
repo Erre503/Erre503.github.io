@@ -3,96 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erre503 - GitHub Profile</title>
+    <title>Erre503 - Terminal</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header class="profile-header">
-            <div class="profile-avatar">
-                <img src="https://github.com/Erre503.png" alt="Erre503 Avatar" class="avatar">
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="terminal-button close"></span>
+                <span class="terminal-button minimize"></span>
+                <span class="terminal-button maximize"></span>
             </div>
-            <div class="profile-info">
-                <h1 class="profile-name">Erre503</h1>
-                <p class="profile-bio">Sviluppatore appassionato | Sempre alla ricerca di nuove sfide nel mondo della programmazione</p>
-                <div class="profile-links">
-                    <a href="https://github.com/Erre503" class="btn btn-primary" target="_blank">
-                        <i class="fab fa-github"></i> GitHub Profile
-                    </a>
-                    <a href="mailto:erre503@example.com" class="btn btn-secondary">
-                        <i class="fas fa-envelope"></i> Contattami
-                    </a>
+            <div class="terminal-title">erre503@github ~ Terminal</div>
+        </div>
+        <div class="terminal-body">
+            <div id="terminal-output">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">erre503@github:~$</span>
+                    <span class="terminal-text">Welcome to Erre503's GitHub Terminal</span>
                 </div>
-            </div>
-        </header>
-
-        <section class="stats-section">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <i class="fas fa-code-branch"></i>
-                    <h3>Risposte</h3>
-                    <p class="stat-number">50+</p>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">erre503@github:~$</span>
+                    <span class="terminal-text">Type 'help' to see available commands</span>
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-star"></i>
-                    <h3>Stelle</h3>
-                    <p class="stat-number">100+</p>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-users"></i>
-                    <h3>Collaboratori</h3>
-                    <p class="stat-number">25+</p>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-project-diagram"></i>
-                    <h3>Progetti</h3>
-                    <p class="stat-number">15+</p>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">erre503@github:~$</span>
+                    <span class="terminal-text">Use 'cat github_stats.txt' or 'cat github_detailed.txt' to view GitHub statistics</span>
                 </div>
             </div>
-        </section>
-
-        <section class="about-section">
-            <h2>Su di me</h2>
-            <p>
-                Ciao! Sono Erre503, uno sviluppatore entusiasta che ama esplorare nuove tecnologie
-                e contribuire alla comunità open source. Mi piace lavorare su progetti che sfidano
-                le mie abilità e mi permettono di imparare qualcosa di nuovo ogni giorno.
-            </p>
-            <div class="skills">
-                <span class="skill-tag">JavaScript</span>
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">React</span>
-                <span class="skill-tag">Node.js</span>
-                <span class="skill-tag">Git</span>
-                <span class="skill-tag">HTML/CSS</span>
+            <div class="terminal-input-line">
+                <span class="terminal-prompt">erre503@github:~$</span>
+                <input type="text" id="terminal-input" autocomplete="off" spellcheck="false">
+                <span class="cursor">█</span>
             </div>
-        </section>
-
-        <section class="projects-section">
-            <h2>Progetti in Evidenza</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>Progetto 1</h3>
-                    <p>Descrizione breve del progetto principale.</p>
-                    <a href="#" class="project-link">Visualizza su GitHub</a>
-                </div>
-                <div class="project-card">
-                    <h3>Progetto 2</h3>
-                    <p>Un altro progetto interessante che ho sviluppato.</p>
-                    <a href="#" class="project-link">Visualizza su GitHub</a>
-                </div>
-                <div class="project-card">
-                    <h3>Progetto 3</h3>
-                    <p>Contributo open source o progetto personale.</p>
-                    <a href="#" class="project-link">Visualizza su GitHub</a>
-                </div>
-            </div>
-        </section>
-
-        <footer class="footer">
-            <p>&copy; 2024 Erre503. Creato con ❤️ per GitHub Pages</p>
-        </footer>
+        </div>
     </div>
+
+    <script src="funct.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const terminalInput = document.getElementById('terminal-input');
+            const terminalOutput = document.getElementById('terminal-output');
+            const terminalSimulator = new window.TerminalSimulator();
+            let commandHistory = [];
+            let historyIndex = -1;
+
+            // Initialize terminal
+            setTimeout(() => {
+                terminalInput.focus();
+            }, 100);
+
+            // Handle input
+            terminalInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const command = this.value.trim();
+                    if (command) {
+                        commandHistory.push(command);
+                        historyIndex = commandHistory.length;
+
+                        // Add command to output
+                        addToOutput(`erre503@github:~$ ${command}`);
+
+                        // Execute command
+                        const result = terminalSimulator.executeCommand(command);
+
+                        if (result === 'CLEAR_TERMINAL') {
+                            clearTerminal();
+                        } else if (result) {
+                            // Split result by newlines and add each line
+                            const lines = result.split('\n');
+                            lines.forEach(line => {
+                                if (line.trim()) {
+                                    addToOutput(line);
+                                }
+                            });
+                        }
+
+                        // Clear input
+                        this.value = '';
+
+                        // Scroll to bottom
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (historyIndex > 0) {
+                        historyIndex--;
+                        this.value = commandHistory[historyIndex];
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (historyIndex < commandHistory.length - 1) {
+                        historyIndex++;
+                        this.value = commandHistory[historyIndex];
+                    } else {
+                        historyIndex = commandHistory.length;
+                        this.value = '';
+                    }
+                }
+            });
+
+            function addToOutput(text) {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'terminal-line';
+
+                if (text.startsWith('erre503@github:~$')) {
+                    const promptSpan = document.createElement('span');
+                    promptSpan.className = 'terminal-prompt';
+                    promptSpan.textContent = 'erre503@github:~$';
+
+                    const textSpan = document.createElement('span');
+                    textSpan.className = 'terminal-text';
+                    textSpan.textContent = text.substring(17);
+
+                    lineDiv.appendChild(promptSpan);
+                    lineDiv.appendChild(textSpan);
+                } else {
+                    const textSpan = document.createElement('span');
+                    textSpan.className = 'terminal-text';
+                    textSpan.textContent = text;
+                    lineDiv.appendChild(textSpan);
+                }
+
+                terminalOutput.appendChild(lineDiv);
+            }
+
+            function clearTerminal() {
+                // Keep only the welcome messages
+                const welcomeLines = [
+                    'Welcome to Erre503\'s GitHub Terminal',
+                    'Type \'help\' to see available commands',
+                    'Use \'cat github_stats.txt\' or \'cat github_detailed.txt\' to view GitHub statistics'
+                ];
+
+                terminalOutput.innerHTML = '';
+                welcomeLines.forEach(line => {
+                    const lineDiv = document.createElement('div');
+                    lineDiv.className = 'terminal-line';
+
+                    const promptSpan = document.createElement('span');
+                    promptSpan.className = 'terminal-prompt';
+                    promptSpan.textContent = 'erre503@github:~$';
+
+                    const textSpan = document.createElement('span');
+                    textSpan.className = 'terminal-text';
+                    textSpan.textContent = line;
+
+                    lineDiv.appendChild(promptSpan);
+                    lineDiv.appendChild(textSpan);
+                    terminalOutput.appendChild(lineDiv);
+                });
+            }
+
+            // Auto-focus on click
+            document.addEventListener('click', function() {
+                terminalInput.focus();
+            });
+
+            // Blinking cursor effect
+            setInterval(() => {
+                const cursor = document.querySelector('.cursor');
+                cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+            }, 500);
+        });
+    </script>
 </body>
 </html>

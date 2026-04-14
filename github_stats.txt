@@ -1,0 +1,36 @@
+Erre503 GitHub Statistics
+========================
+
+Profile Information:
+- Username: Erre503
+- Name: Erre503
+- Location: Italy
+- Joined: January 2020
+- Bio: Sviluppatore appassionato | Sempre alla ricerca di nuove sfide nel mondo della programmazione
+
+Repository Statistics:
+- Total Repositories: 15+
+- Public Repositories: 12
+- Private Repositories: 3
+- Stars Received: 100+
+- Forks: 45
+- Contributors: 25+
+
+Language Distribution:
+- JavaScript: 40%
+- Python: 25%
+- HTML/CSS: 15%
+- TypeScript: 10%
+- Other: 10%
+
+Most Used Languages:
+1. JavaScript - 8 repositories
+2. Python - 4 repositories
+3. HTML/CSS - 2 repositories
+4. TypeScript - 1 repository
+
+Recent Activity:
+- Last commit: 2 days ago
+- Pull requests: 23 open, 156 closed
+- Issues: 12 open, 89 closed
+- Contributions this year: 342
