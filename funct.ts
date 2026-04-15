@@ -56,6 +56,8 @@ class TerminalSimulator {
                 return this.uname(args);
             case 'neofetch':
                 return this.neofetch();
+            case 'goated':
+                return this.goated();
             default:
                 return `Command not found: ${cmd}. Type 'help' for available commands.`;
         }
